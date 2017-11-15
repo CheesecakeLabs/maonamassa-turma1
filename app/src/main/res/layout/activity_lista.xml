@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/turmaRecyclerView"
+        android:id="@+id/funcionarioRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
