@@ -9,7 +9,7 @@ import com.example.gracietti.maonamassa.modelos.Turma
 import com.example.gracietti.maonamassa.utils.TurmaAdapter
 import kotlinx.android.synthetic.main.activity_lista.*
 
-class ListaActivity: AppCompatActivity() {
+class ListaActivity: AppCompatActivity(), TurmaClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +29,22 @@ class ListaActivity: AppCompatActivity() {
         turma1.local = "CELTA"
         turma1.nome = "Turma Android"
         turma1.total = 16
+        turma1.fotoUrl = "https://d1zx4fn8ox8446.cloudfront.net/filemanager.rboxfile/651fa4102edb423caa08186b46776436/Logos_Vertical.png"
 
         val turma2 = Turma()
         turma2.local = "CELTA"
         turma2.nome = "Turma Servidor"
         turma2.total = 12
+        turma2.fotoUrl = "https://d1zx4fn8ox8446.cloudfront.net/filemanager.rboxfile/651fa4102edb423caa08186b46776436/Logos_Vertical.png
 
         listaDeTurma.add(turma1)
         listaDeTurma.add(turma2)
 
-        turmaRecyclerView.adapter = TurmaAdapter(listaDeTurma)
+        turmaRecyclerView.adapter = TurmaAdapter(listaDeTurma, this)
+    }
+
+    override onTurmaClicked(turma: Turma) {
+        val proximaTela = Intent(this, DetalhesActivity::class.java)
+        startActivity(proximaTela)
     }
 }

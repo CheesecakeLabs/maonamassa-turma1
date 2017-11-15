@@ -13,15 +13,15 @@ import kotlinx.android.synthetic.main.item_turma.view.*
  */
 
 //Logica para processar os dados e chamar o ViewHolder
-class TurmaAdapter(var lista: List<Turma>): RecyclerView.Adapter<TurmaViewHolder>() {
+class TurmaAdapter(var lista: List<Turma>, var listener: TurmaClickListener): RecyclerView.Adapter<TurmaViewHolder>() {
 
     override fun getItemCount(): Int {
-         lista.size
+         return lista.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TurmaViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_turma, parent, false)
-        return TurmaViewHolder(view)
+        return TurmaViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: TurmaViewHolder?, position: Int) {
@@ -31,7 +31,7 @@ class TurmaAdapter(var lista: List<Turma>): RecyclerView.Adapter<TurmaViewHolder
 }
 
 //Faz o match de cada atributo com as variaveis do XML
-class TurmaViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TurmaViewHolder(itemView: View, var listener: TurmaClickListener): RecyclerView.ViewHolder(itemView) {
 
     var turma: Turma? = null
         set(turma) {
@@ -41,5 +41,15 @@ class TurmaViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             itemView.nomeTextView.text = turma.nome
             itemView.localTextView.text = turma.local
             itemView.totalTextView.text = turma.total.toString()
+
+            Picasso.with(itemView.context).load(turma.fotoUrl).into(itemView.turmaImageView)
+
+            itemView.setOnClickListener {
+                listener.onTurmaClicked(turma)
+            }
         }
+}
+
+interface TurmaClickListener {
+    fun onTurmaClicked(turma: Turma)
 }
